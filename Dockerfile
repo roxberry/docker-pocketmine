@@ -2,11 +2,28 @@
 FROM ubuntu:trusty
 MAINTAINER  Mark Roxberry <roxberry@outlook.com>
 
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:ondrej/php-7.0
-sudo apt-get update
-sudo apt-get install libapache2-mod-php7.0 php7.0-fpm php7.0-common php7.0-cli php-pear php7.0-curl php7.0-gd php7.0-gmp php7.0-intl php7.0-imap php7.0-json php7.0-ldap php7.0-mcrypt php7.0-mysql php7.0-psphp7.0-readline php7.0-tidy php7.0-xmlrpc php7.0-xsl
-sudo apt-get --purge autoremove
+RUN apt-get update
+
+RUN apt-get build-dep -y php5 && apt-get install -y \
+    git \
+    make \
+    autoconf \
+    build-essential \
+    g++ \
+    libc6-dev
+
+RUN cd /opt && git clone https://github.com/php/php-src.git --depth=1
+
+RUN cd /opt/php-src && ./buildconf --force
+
+RUN cd /opt/php-src && ./configure --quiet \
+    --prefix=/opt/php-nightly
+
+RUN cd /opt/php-src && make --quiet
+
+#RUN cd /opt/php-src && make install
+
+RUN cp /opt/php-src/sapi/cli/php /usr/local/bin/php
 
 #Setup enviroment variables
 ENV CNAME="pocketmine"
