@@ -2,28 +2,12 @@
 FROM ubuntu:trusty
 MAINTAINER  Mark Roxberry <roxberry@outlook.com>
 
+RUN apt-get install python-software-properties
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
-
-RUN apt-get build-dep -y php5 && apt-get install -y \
-    git \
-    make \
-    autoconf \
-    build-essential \
-    g++ \
-    libc6-dev
-
-RUN cd /opt && git clone https://github.com/php/php-src.git --depth=1
-
-RUN cd /opt/php-src && ./buildconf --force
-
-RUN cd /opt/php-src && ./configure --quiet \
-    --prefix=/opt/php-nightly
-
-RUN cd /opt/php-src && make --quiet
-
-#RUN cd /opt/php-src && make install
-
-RUN cp /opt/php-src/sapi/cli/php /usr/local/bin/php
+RUN apt-get install -y php7.0
+RUN apt-get install libapache2-mod-php7.0 php7.0-mysql php7.0-curl php7.0-json
+RUN apt-get install php7.0-dev php7.0-enchant php7.0-gd php7.0-gmp php7.0-imap php7.0-interbase php7.0-intl php7.0-ldap php7.0-mcrypt php7.0-readline php7.0-odbc php7.0-pgsql php7.0-pspell php7.0-recode php7.0-snmp php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-sybase php7.0 php7.0-sqlite3 php7.0-opcache php7.0-bz2 php7.0-bcmath php7.0-mbstring php7.0-soap php7.0-xml php7.0-zip
 
 #Setup enviroment variables
 ENV CNAME="pocketmine"
