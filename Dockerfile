@@ -2,7 +2,7 @@
 FROM ubuntu:trusty
 MAINTAINER  Mark Roxberry <roxberry@outlook.com>
 
-RUN add-apt-repository ppa:ondrej/php
+RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
