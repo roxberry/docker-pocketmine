@@ -2,7 +2,7 @@
 FROM ubuntu:trusty
 MAINTAINER  Mark Roxberry <roxberry@outlook.com>
 
-RUN apt-get install python-software-properties
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 RUN apt-get install -y php7.0
